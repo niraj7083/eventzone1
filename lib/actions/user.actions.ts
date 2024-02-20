@@ -13,20 +13,22 @@ import { CreateUserParams, UpdateUserParams } from '@/types'
 export async function createUser(user: CreateUserParams) {
   try {
     await connectToDatabase()
-
+   
     const newUser = await User.create(user)
+    console.log(newUser)
+    if (!newUser) throw new Error('User creation failed')
     return JSON.parse(JSON.stringify(newUser))
   } catch (error) {
     handleError(error)
   }
 }
 
-export async function getUserById(userId: string) {
+export async function getUserById(userid: string, pass: string) {
   try {
     await connectToDatabase()
-
-    const user = await User.findById(userId)
-
+   console.log(userid, pass)
+    const user = await User.find({userid: userid, pass: pass})
+   console.log(user)
     if (!user) throw new Error('User not found')
     return JSON.parse(JSON.stringify(user))
   } catch (error) {
@@ -34,11 +36,11 @@ export async function getUserById(userId: string) {
   }
 }
 
-export async function updateUser(clerkId: string, user: UpdateUserParams) {
+export async function updateUser( user: UpdateUserParams) {
   try {
     await connectToDatabase()
 
-    const updatedUser = await User.findOneAndUpdate({ clerkId }, user, { new: true })
+    const updatedUser = await User.findOneAndUpdate( user, { new: true })
 
     if (!updatedUser) throw new Error('User update failed')
     return JSON.parse(JSON.stringify(updatedUser))
@@ -47,12 +49,12 @@ export async function updateUser(clerkId: string, user: UpdateUserParams) {
   }
 }
 
-export async function deleteUser(clerkId: string) {
+export async function deleteUser(userId: string) {
   try {
     await connectToDatabase()
 
     // Find user to delete
-    const userToDelete = await User.findOne({ clerkId })
+    const userToDelete = await User.findOne({ _id: userId })
 
     if (!userToDelete) {
       throw new Error('User not found')

@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.27.5",
     "@hookform/resolvers": "^3.3.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -23,6 +22,7 @@
     "@uploadthing/react": "^6.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "cookies-next": "^4.1.1",
     "lucide-react": "^0.294.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.3",
@@ -48,5 +48,12 @@
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
-  }
+  },
+  "description": "<div align=\"center\">\r   <br />\r     <a href=\"https://youtu.be/zgGhzuBZOQg\" target=\"_blank\">\r       <img src=\"https://github.com/adrianhajdin/event_platform/assets/151519281/548975af-f0ed-4103-8834-fe93cf91862e\" alt=\"Project Banner\">\r     </a>\r   <br />",
+  "main": "next.config.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "author": "",
+  "license": "ISC"
 }

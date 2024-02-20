@@ -1,11 +1,11 @@
 import EventForm from "@/components/shared/EventForm"
-import { auth } from "@clerk/nextjs";
+import { cookies } from "next/headers";
 
 const CreateEvent = () => {
-  const { sessionClaims } = auth();
 
-  const userId = sessionClaims?.userId as string;
-
+  const user=cookies()?.get("userid") as unknown as string
+  const userId = user.value as string
+  console.log("user",userId)
   return (
     <>
       <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">

@@ -1,10 +1,12 @@
+"use server";
+
 import { IEvent } from '@/lib/database/models/event.model'
 import { formatDateTime } from '@/lib/utils'
-import { auth } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { DeleteConfirmation } from './DeleteConfirmation'
+import { cookies } from 'next/headers'
 
 type CardProps = {
   event: IEvent,
@@ -13,9 +15,9 @@ type CardProps = {
 }
 
 const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
-  const { sessionClaims } = auth();
-  const userId = sessionClaims?.userId as string;
-
+  const user=cookies()?.get("userid") as unknown as string
+  const userId = user?.value as string
+  console.log("user",userId)
   const isEventCreator = userId === event.organizer._id.toString();
 
   return (
@@ -27,7 +29,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
       />
       {/* IS EVENT CREATOR ... */}
 
-      {isEventCreator && !hidePrice && (
+    {isEventCreator && !hidePrice && (
         <div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all">
           <Link href={`/events/${event._id}/update`}>
             <Image src="/assets/icons/edit.svg" alt="edit" width={20} height={20} />
@@ -61,6 +63,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
           <p className="p-medium-14 md:p-medium-16 text-grey-600">
             {event.organizer.firstName} {event.organizer.lastName}
           </p>
+
 
           {hasOrderLink && (
             <Link href={`/orders?eventId=${event._id}`} className="flex gap-2">
