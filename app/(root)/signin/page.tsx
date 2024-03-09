@@ -19,7 +19,7 @@ const signin =() => {
         console.log(userid, pass)
         const data = { userid, pass };
         console.log(data)
-        let data1 =  fetch('http://localhost:3000/api/signin', {
+        let data1 =  fetch('/api/signin', {
             method: 'POST', // or 'PUT'
             body: JSON.stringify(data),
             headers: {

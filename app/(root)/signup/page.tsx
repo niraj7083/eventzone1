@@ -24,7 +24,7 @@ const signin =  () => {
     console.log(userid,pass)
     const data = {fullname,email,userid,pass,mobile_no,city,date_b};
    console.log(data)
-    fetch('http://localhost:3000/api/signup', {
+    fetch('/api/signup', {
         method: 'POST', // or 'PUT'
         body: JSON.stringify(data),
         headers: {
