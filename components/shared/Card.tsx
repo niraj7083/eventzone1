@@ -15,8 +15,8 @@ type CardProps = {
 }
 
 const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
-  const user=cookies()?.get("userid") as unknown as string
-  const userId = user?.value as string
+  const user=cookies()?.get("userid")?.value as unknown as string
+  const userId = user as string
   console.log("user",userId)
   const isEventCreator = userId === event.organizer._id.toString();
 
