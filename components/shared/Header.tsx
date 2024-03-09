@@ -10,17 +10,18 @@ import { logout } from "@/app/api/logout/route"
 
 const Header = () => {
 
-  
+
 
 
   return (
     <header className="w-full border-b">
       <div className="wrapper flex items-center justify-between">
-        <Link href="/" className="w-36">
+      <Link href="/" className="w-36 flex items-center ">
           <Image 
-            src="/assets/images/logo.svg" width={128} height={38}
-            alt="Evently logo" 
+            src="/assets/images/logo.svg" width={68} height={48}
+            alt="eventzone logo" 
           />
+          <p className="text-4xl font-serif font-semibold">Event<span className="text-blue-600 ">Zone</span></p>
         </Link>
 
          {cookies().has("userid") &&
@@ -31,11 +32,6 @@ const Header = () => {
 
 
 
-{/*cookies().has("userid") &&
-        <div onClick={logout} className="flex w-32 justify-end gap-3">
-   <Button>logout</Button>
-           </div>
-*/}
 
 
 
@@ -49,11 +45,11 @@ const Header = () => {
             </Button>
 }
 {cookies().has("userid")  &&  
-            <Button asChild className="rounded-full" size="lg">
-              <a href="/signin">
-               logout
-              </a>
-            </Button>
+          <Button asChild className="rounded-full" size="lg">
+          <a href="/signin">
+            Login
+          </a>
+        </Button>
 }
         </div>
       </div>

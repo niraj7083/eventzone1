@@ -7,13 +7,15 @@ export async function POST(request: Request) {
 
   const sig = request.headers.get('stripe-signature') as string
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!
+  console.log(endpointSecret)
 
   let event
 
   try {
     event = stripe.webhooks.constructEvent(body, sig, endpointSecret)
   } catch (err) {
-    return NextResponse.json({ message: 'Webhook error', error: err })
+    console.log(err)
+    return new Response('Invalid payload', { status: 400 })
   }
 
   // Get the ID and type
@@ -30,7 +32,7 @@ export async function POST(request: Request) {
       totalAmount: amount_total ? (amount_total / 100).toString() : '0',
       createdAt: new Date(),
     }
-
+     console.log(order)
     const newOrder = await createOrder(order)
     return NextResponse.json({ message: 'OK', order: newOrder })
   }

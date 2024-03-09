@@ -1,4 +1,4 @@
-
+'use client'
 import React, { use, useEffect } from 'react'
 import { loadStripe } from '@stripe/stripe-js';
 

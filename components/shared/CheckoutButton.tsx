@@ -4,15 +4,13 @@ import Link from 'next/link'
 import React from 'react'
 import { Button } from '../ui/button'
 import Checkout from './Checkout'
+import { cookies } from 'next/headers'
 
 
 
 const CheckoutButton = ({ event }: { event: IEvent }) => {
 
   const userId = event.organizer._id.toString()
-  console.log("user",userId)
-
-  console.log(userId)
   const hasEventFinished = new Date(event.endDateTime) < new Date();
 
   return (
@@ -21,17 +19,17 @@ const CheckoutButton = ({ event }: { event: IEvent }) => {
         <p className="p-2 text-red-400">Sorry, tickets are no longer available.</p>
       ) : (
         <>
-
+ {!cookies().has("userid") &&
           <Button asChild className="button rounded-full" size="lg">
-            <Link href="/sign-in">
+            <Link href="/signin">
               Get Tickets
             </Link>
-          </Button>
+            </Button>}
 
 
-
+            {cookies().has("userid") &&
           <Checkout event={event} userId={userId} />
-
+      }
         </>
       )}
     </div>
