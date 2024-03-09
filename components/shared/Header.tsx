@@ -6,7 +6,7 @@ import NavItems from "./NavItems"
 import MobileNav from "./MobileNav"
 import { cookies } from "next/headers"
 import { features } from "process"
-import { logout } from "@/app/api/logout/route"
+
 
 const Header = () => {
 

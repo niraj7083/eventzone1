@@ -12,8 +12,8 @@ type UpdateEventProps = {
 const UpdateEvent = async ({ params: { id } }: UpdateEventProps) => {
 
 
-  const user=cookies().get("userid") as unknown as string
-  const userId = user.value as string
+  const user=cookies().get("userid")?.value as unknown as string
+  const userId = user as string
   console.log("user",userId)
   const event = await getEventById(id)
 
