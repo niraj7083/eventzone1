@@ -33,7 +33,8 @@ const signin =  () => {
         
     }). then(res => res.json()).then(data => {
         console.log(data)
-        if (data=="success") {
+        if (data.success) {
+            localStorage.setItem('userid', data.userid)
             router.push('/')
         }
         else {

@@ -30,7 +30,7 @@ const signin =() => {
             console.log(data)
             if (data.success) {
                 localStorage.setItem('userid', data.userid)
-                router.push('/')
+               window.location.href='/'
             }
             else {
                 console.log(data.error)

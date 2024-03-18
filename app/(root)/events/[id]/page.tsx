@@ -7,19 +7,25 @@ import { IEvent } from '@/lib/database/models/event.model';
 import { formatDateTime } from '@/lib/utils';
 import { SearchParamProps } from '@/types'
 
+import { cookies } from 'next/headers';
+
 import Image from 'next/image';
+import Link from 'next/link';
 
 
 
 const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) => {
+     
+  const user=cookies().get("userid")?.value as unknown as string
+  const userId = user as string
+  const event = await getEventById(id) as IEvent
 
-  const event = await getEventById(id);
   const relatedEvents = await getRelatedEventsByCategory({
     categoryId: event.category._id,
     eventId: event._id,
     page: searchParams.page as string,
   })
-
+  const isEventCreator = userId === event.organizer._id.toString();
   return (
     <>
     <section className="flex justify-center bg-primary-50 bg-dotted-pattern bg-contain">
@@ -52,9 +58,16 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
               </p>
             </div>
           </div>
+          {isEventCreator && (
+            <Link href={`/orders?eventId=${event._id}`} className="flex gap-2">
+              <p className="text-primary-500">Order Details</p>
+              <Image src="/assets/icons/arrow.svg" alt="search" width={10} height={10} />
+            </Link>
+          )}
 
+          {!isEventCreator &&
         <CheckoutButton event={event} />
-
+          }
           <div className="flex flex-col gap-5">
             <div className='flex gap-2 md:gap-3'>
               <Image src="/assets/icons/calendar.svg" alt="calendar" width={32} height={32} />

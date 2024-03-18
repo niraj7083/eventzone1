@@ -1,16 +1,26 @@
+'use client'
 
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "../ui/button"
 import NavItems from "./NavItems"
 import MobileNav from "./MobileNav"
-import { cookies } from "next/headers"
-import { features } from "process"
+import { useState,useEffect } from "react"
+import { handleError } from "@/lib/utils"
+import { useRouter } from "next/navigation"
+
 
 
 const Header = () => {
-
-
+  const router = useRouter()
+const [user, setuser] = useState(false)
+useEffect(() => {
+     if(localStorage.userid){
+      setuser(true)
+     }else{
+      setuser(false)
+     }
+  },[])
 
 
   return (
@@ -24,7 +34,7 @@ const Header = () => {
           <p className="text-4xl font-serif font-semibold">Event<span className="text-blue-600 ">Zone</span></p>
         </Link>
 
-         {cookies().has("userid") &&
+         {user &&
           <nav className="md:flex-between text-center justify-center hidden w-full max-w-xs">
             <NavItems />
           </nav>
@@ -32,24 +42,41 @@ const Header = () => {
 
 
 
-
-
-
      <div className="flex w-32 justify-end gap-3">
        
-     {!cookies().has("userid")  &&  
+     {!user &&  
             <Button asChild className="rounded-full" size="lg">
               <a href="/signin">
                 Login
               </a>
             </Button>
 }
-{cookies().has("userid")  &&  
-          <Button asChild className="rounded-full" size="lg">
-          <a href="/signin">
-            Login
-          </a>
-        </Button>
+{user &&  
+          <Button className="rounded-full" onClick={() => {
+            const userid = localStorage.userid
+            const data = {
+              userid
+            }
+            fetch('/api/logout', {
+              method: 'POST', // or 'PUT'
+              body: JSON.stringify(data),
+              headers: {
+                  'Content-Type': 'application/json',
+              }
+  
+          }).then(res => res.json()).then(data => {
+              console.log(data)
+              if (data.success) {
+                localStorage.removeItem("userid")
+                window.location.reload()
+              }
+              else {
+                  console.log(data.error)
+                  handleError(data.error)
+              }
+          })
+          
+          }}>Logout</Button>
 }
         </div>
       </div>
