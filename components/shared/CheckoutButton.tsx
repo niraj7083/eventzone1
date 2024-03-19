@@ -10,7 +10,7 @@ import { cookies } from 'next/headers'
 
 const CheckoutButton = ({ event }: { event: IEvent }) => {
 
-  const userId = event.organizer._id.toString()
+  const userId = cookies()?.get("userid")?.value as unknown as string
   const hasEventFinished = new Date(event.endDateTime) < new Date();
 
   return (

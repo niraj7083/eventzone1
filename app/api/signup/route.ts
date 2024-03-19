@@ -14,9 +14,9 @@ export async function POST(req:Request) {
   
     const User=await createUser(data);
     cookies().set("userid",User._id);
-    return Response.json({"success":true,"userid":User[0]._id});
+    return Response.json({"success":true,"userid":User._id});
   } catch (error) {
     handleError(error);
-    return Response.json("error");
+    return Response.json({"success":false});
   }
 }
